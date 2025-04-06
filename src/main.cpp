@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include "grid.hpp"
 
 
 int main() 
@@ -12,6 +13,8 @@ int main()
 
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Game of Life");
     SetTargetFPS(FPS);  //FPS limit
+    Grid grid{WINDOW_WIDTH, WINDOW_HEIGHT, CELL_SIZE};
+    grid.SetValue(0, 0, 1);
 
     //Simulation Loop
     while(WindowShouldClose() == false)     //ESC lub close button closes the program
@@ -25,6 +28,7 @@ int main()
         // 3. Drawing
         BeginDrawing();
         ClearBackground(GREY);
+        grid.Draw();
         EndDrawing();
 
     }
