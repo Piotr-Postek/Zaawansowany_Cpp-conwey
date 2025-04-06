@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include <iostream>
 #include "simulation.hpp"
 
 
@@ -14,7 +15,10 @@ int main()
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Game of Life");
     SetTargetFPS(FPS);  //FPS limit
     Simulation simulation{WINDOW_WIDTH, WINDOW_HEIGHT, CELL_SIZE};
-    simulation.SetCellValue(3, 4, 1);
+    // simulation.SetCellValue(5, 29, 1);
+    // simulation.SetCellValue(6, 0, 1);
+    // simulation.SetCellValue(5, 0, 1);
+    // std::cout << simulation.CountLiveNeighbors(5, 29) << std::endl;
 
     //Simulation Loop
     while(WindowShouldClose() == false)     //ESC lub close button closes the program
