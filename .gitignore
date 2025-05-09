@@ -1,3 +1,10 @@
 *.exe
 *.dsym
 main
+.vscode
+.idea
+build
+cmake-build-debug
+CMakeLists.txt
+c_cpp_properties.json
+tasks.json

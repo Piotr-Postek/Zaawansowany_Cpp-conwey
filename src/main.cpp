@@ -1,44 +1,32 @@
-#include <raylib.h>
-#include <iostream>
-#include "simulation.hpp"
+#include "game_logic.hpp"
+#include "game_renderer.hpp"
 
-
-int main() 
-{
-    Color GREY = {29, 29, 29, 255};
+int main() {
     const int WINDOW_WIDTH = 750;
     const int WINDOW_HEIGHT = 750;
     const int CELL_SIZE = 25;
-    int FPS = 12;
-
-
-    InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Game of Life");
-    SetTargetFPS(FPS);  //FPS limit
-    Simulation simulation{WINDOW_WIDTH, WINDOW_HEIGHT, CELL_SIZE};
-    // simulation.SetCellValue(5, 29, 1);
-    // simulation.SetCellValue(6, 0, 1);
-    // simulation.SetCellValue(5, 0, 1);
-    // std::cout << simulation.CountLiveNeighbors(5, 29) << std::endl;
-
-    //Simulation Loop
-    while(WindowShouldClose() == false)     //ESC lub close button closes the program
-    {
-        // 1. Event Handling
-
-
-        // 2. Updating State
-
-
-        // 3. Drawing
-        BeginDrawing();
-        ClearBackground(GREY);
-        simulation.Draw();
-        EndDrawing();
-
+    
+    GameRenderer renderer(WINDOW_WIDTH, WINDOW_HEIGHT, CELL_SIZE);
+    GameLogic game(WINDOW_HEIGHT / CELL_SIZE, WINDOW_WIDTH / CELL_SIZE);
+    
+    bool isPaused = true;
+    
+    while (!renderer.shouldClose()) {
+        // Handle input
+        renderer.handleInput(game);
+        
+        if (IsKeyPressed(KEY_SPACE)) {
+            isPaused = !isPaused;
+        }
+        
+        // Update game state
+        if (!isPaused) {
+            game.updateState();
+        }
+        
+        // Render
+        renderer.render(game);
     }
-
-
-
-
-    CloseWindow();
+    
+    return 0;
 }
