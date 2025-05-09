@@ -1,0 +1,7 @@
+Underpopulation: A live cell with fewer than two live neighbors dies.
+
+Stasis: A live cell with two or three live neighbors lives on to the next generation.
+
+Overpopulation: A live cell with more than three live neighbors dies.
+
+Reproduction: A dead cell with exactly three live neighbors becolmes a live cell.
