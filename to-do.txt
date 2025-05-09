@@ -1,0 +1,12 @@
+basics:
+1. create blank screeb and the simulation loop
+2. create the grid
+3. count live neighbors
+4. implement simulation rules
+5. starting and stopping the simulation
+6. create custom inital state
+
+additional:
+1. different grids
+2. color pallet
+3. pre-designed patterns
