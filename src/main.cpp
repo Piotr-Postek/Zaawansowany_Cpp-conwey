@@ -1,5 +1,7 @@
 #include "game_logic.hpp"
 #include "game_renderer.hpp"
+#include <chrono>
+#include <thread>
 
 int main() {
     const int WINDOW_WIDTH = 750;
@@ -9,18 +11,14 @@ int main() {
     GameRenderer renderer(WINDOW_WIDTH, WINDOW_HEIGHT, CELL_SIZE);
     GameLogic game(WINDOW_HEIGHT / CELL_SIZE, WINDOW_WIDTH / CELL_SIZE);
     
-    bool isPaused = true;
-    
     while (!renderer.shouldClose()) {
         // Handle input
         renderer.handleInput(game);
         
-        if (IsKeyPressed(KEY_SPACE)) {
-            isPaused = !isPaused;
-        }
-        
-        // Update game state
-        if (!isPaused) {
+        // Update game state only if game has started
+        if (renderer.isGameStarted()) {
+            // Add a small delay to make the simulation visible
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
             game.updateState();
         }
         
