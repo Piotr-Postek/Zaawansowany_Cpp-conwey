@@ -2,6 +2,8 @@
 #include <utility>
 #include "simulation.hpp"
 
+using namespace std;
+
 void Simulation::Draw()
 {
     grid.Draw();
@@ -15,7 +17,7 @@ void Simulation::SetCellValue(int row, int column, int value)
 int Simulation::CountLiveNeighbors(int row, int column)
 {
     int liveNeighbors = 0;
-    std::vector<std::pair<int, int>> neightborOffsets = 
+    vector<pair<int, int>> neightborOffsets = 
     {
         {-1, 0},
         {1, 0},

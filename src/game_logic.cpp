@@ -1,7 +1,9 @@
 #include "game_logic.hpp"
 
-GameLogic::GameLogic(int rows, int columns)
-    : rows(rows), columns(columns), grid(rows, std::vector<bool>(columns, false)) {}
+using namespace std;
+
+GameLogic::GameLogic(int rows, int columns, shared_ptr<NeighborhoodStrategy> strategy)
+    : rows(rows), columns(columns), grid(rows, vector<bool>(columns, false)), strategy(strategy) {}
 
 void GameLogic::setCellState(int row, int column, bool alive) {
     if (isWithinBounds(row, column)) {
@@ -16,19 +18,19 @@ bool GameLogic::getCellState(int row, int column) const {
     return false;
 }
 
+// 
+
 int GameLogic::countLiveNeighbors(int row, int column) const {
     int liveNeighbors = 0;
     
-    // Check all 8 surrounding cells
-    for (int i = -1; i <= 1; i++) {
-        for (int j = -1; j <= 1; j++) {
-            // Skip the cell itself
-            if (i == 0 && j == 0) continue;
-            
-            int neighborRow = (row + i + rows) % rows;
-            int neighborColumn = (column + j + columns) % columns;
-            liveNeighbors += grid[neighborRow][neighborColumn] ? 1 : 0;
-        }
+    // Get neighbor offsets from the strategy
+    auto neighborOffsets = strategy->getNeighbors(row, column, rows, columns);
+    
+    // Count live neighbors
+    for (const auto& offset : neighborOffsets) {
+        int neighborRow = (row + offset.first + rows) % rows;
+        int neighborColumn = (column + offset.second + columns) % columns;
+        liveNeighbors += grid[neighborRow][neighborColumn] ? 1 : 0;
     }
     
     return liveNeighbors;
@@ -36,7 +38,7 @@ int GameLogic::countLiveNeighbors(int row, int column) const {
 
 void GameLogic::updateState() {
     // Create a new grid for the next state
-    std::vector<std::vector<bool>> newGrid(rows, std::vector<bool>(columns, false));
+    vector<vector<bool>> newGrid(rows, vector<bool>(columns, false));
     
     // Calculate next state for each cell
     for (int row = 0; row < rows; row++) {
@@ -60,7 +62,7 @@ void GameLogic::updateState() {
     }
     
     // Update the grid with the new state
-    grid = std::move(newGrid);
+    grid = move(newGrid);
 }
 
 bool GameLogic::isWithinBounds(int row, int column) const {

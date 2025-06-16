@@ -2,6 +2,8 @@
 #include <chrono>
 #include <thread>
 
+using namespace std;
+
 GameRenderer::GameRenderer(int windowWidth, int windowHeight, int cellSize)
     : windowWidth(windowWidth), windowHeight(windowHeight), cellSize(cellSize), gameStarted(false) {
     InitWindow(windowWidth, windowHeight, "Game of Life");
@@ -49,7 +51,7 @@ void GameRenderer::handleInput(GameLogic& game) {
             if (isMouseOverButton()) {
                 gameStarted = true;
                 // Add a small delay to ensure the button click is processed
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                this_thread::sleep_for(chrono::milliseconds(100));
             } else {
                 Vector2 mousePos = GetMousePosition();
                 auto [row, column] = screenToGrid(mousePos.x, mousePos.y);
@@ -74,7 +76,7 @@ void GameRenderer::drawCell(int row, int column, bool isAlive) {
     DrawRectangle(column * cellSize, row * cellSize, cellSize - 1, cellSize - 1, color);
 }
 
-std::pair<int, int> GameRenderer::screenToGrid(int x, int y) const {
+pair<int, int> GameRenderer::screenToGrid(int x, int y) const {
     int row = y / cellSize;
     int column = x / cellSize;
     return {row, column};

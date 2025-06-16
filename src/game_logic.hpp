@@ -1,10 +1,14 @@
 #pragma once
 #include <vector>
 #include <utility>
+#include <memory>
+#include "neighborhood_strategy.hpp"
+
+using namespace std;
 
 class GameLogic {
 public:
-    GameLogic(int rows, int columns);
+    GameLogic(int rows, int columns, shared_ptr<NeighborhoodStrategy> strategy = make_shared<MooreNeighborhood>());
     
     // Core game logic methods
     void setCellState(int row, int column, bool alive);
@@ -15,11 +19,17 @@ public:
     // Getters
     int getRows() const { return rows; }
     int getColumns() const { return columns; }
-    const std::vector<std::vector<bool>>& getGrid() const { return grid; }
+    const vector<vector<bool>>& getGrid() const { return grid; }
+
+    // Strategy setter
+    void setNeighborhoodStrategy(shared_ptr<NeighborhoodStrategy> newStrategy) {
+        strategy = newStrategy;
+    }
 
 private:
     int rows;
     int columns;
-    std::vector<std::vector<bool>> grid;
+    vector<vector<bool>> grid;
+    shared_ptr<NeighborhoodStrategy> strategy;
     bool isWithinBounds(int row, int column) const;
 }; 

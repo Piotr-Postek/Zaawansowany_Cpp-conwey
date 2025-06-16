@@ -1,6 +1,8 @@
 #pragma once
-#include </opt/homebrew/Cellar/raylib/5.5/include/raylib.h>
+#include <raylib.h>
 #include "game_logic.hpp"
+
+using namespace std;
 
 class GameRenderer {
 public:
@@ -26,7 +28,7 @@ private:
     bool gameStarted;
     
     void drawCell(int row, int column, bool isAlive);
-    std::pair<int, int> screenToGrid(int x, int y) const;
+    pair<int, int> screenToGrid(int x, int y) const;
     void drawStartButton();
     bool isMouseOverButton() const;
 }; 
